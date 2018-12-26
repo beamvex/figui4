@@ -205,7 +205,7 @@
 
 import playersService from './playersService'
 
-playersService.getPlayers();
+
 
   export default {
     data: () => ({
@@ -246,6 +246,9 @@ playersService.getPlayers();
     }),
     props: {
       source: String
+    },
+    mounted() {
+      playersService.getPlayers();
     }
   }
 </script>
