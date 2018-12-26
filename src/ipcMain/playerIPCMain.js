@@ -1,5 +1,16 @@
 import { ipcMain } from 'electron';
-import fetch from 'node-fetch';
+import nodeFetch from 'node-fetch'
+import fetchCached from 'fetch-cached'
+import fs from 'fs';
+import base62 from 'base62';
+
+const fetch = new fetchCached({
+  fetch: nodeFetch,
+  cache: {
+    get: (k) => Promise.resolve(null),
+    set: (k, v) => fs.writeFileSync(base62.encode(k), v),
+  }
+});
 
 ipcMain.on('getPlayers', (event, data) => {
 
