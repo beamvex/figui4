@@ -6,11 +6,26 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
+    drawer: false,
   },
   mutations: {
     increment (state) {
       state.count++
+    },
+    toggleDraw (state) {
+      state.drawer = !state.drawer;
+    },
+    setDraw (state, payload) {
+      state.drawer = payload.newValue;
+    }
+  },
+  actions: {
+    draw (context) {
+      context.commit('toggleDraw')
+    },
+    drawSet (context, payload) {
+      context.commit('setDraw', { newValue : payload.newValue })
     }
   }
 })
