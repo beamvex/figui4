@@ -10,7 +10,7 @@ const fetch = new fetchCached({
     get: (k) => {
         var filename = md5(k) + '.dat';
         if (fs.existsSync(filename)) {
-            return Promise.resolve(fs.readFileSync());
+            return Promise.resolve(fs.readFileSync(filename));
         } else {
             return Promise.resolve(null);
         }

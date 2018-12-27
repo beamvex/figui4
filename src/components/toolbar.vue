@@ -23,7 +23,25 @@
       label="Search for players"
       solo-inverted
       prepend-inner-icon="search"
-    ></v-autocomplete>
+    >
+            <template
+                slot="item"
+                slot-scope="data"
+              >
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                </template>
+                <template v-else>
+                  <v-list-tile-avatar>
+                    <img :src="data.item.avatar">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="data.item.team"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </template>
+              </template>
+    </v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn icon>
         <v-icon>apps</v-icon>
@@ -61,7 +79,7 @@
                 players : {
                     get() {
                         return this.$store.state.items.map(function(item) {
-                                return { text: item['name'] + ', ' + item['team'], value: item['id']};
+                                return { text: item['name'] + ' ' + item['team'], name: item['name'], team: item['team'], value: item['id'], avatar: 'https://img.footballindex.co.uk/' + item['attributes']['optimized_image']};
                         });
                     },
                     set(newValue) {
@@ -76,7 +94,7 @@
         // Simulated ajax query
         setTimeout(() => {
           this.items = this.players.filter(e => {
-            return (e.text || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
+            return ((e.text || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1) ;
           })
           this.loading = false
         }, 500)
