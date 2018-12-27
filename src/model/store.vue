@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     count: 0,
     drawer: false,
     items: [],
+    selectedPlayers: [],
   },
   mutations: {
     increment (state) {
@@ -22,6 +23,13 @@ const store = new Vuex.Store({
     },
     setItems(state, payload) {
       state.items = payload.items;
+    },
+    playerAdd(state, payload) {
+      state.items.forEach(element => {
+        if (element.id === payload.playerId) {
+          state.selectedPlayers.unshift(element);
+        }
+      });
     }
   },
   actions: {
@@ -33,6 +41,9 @@ const store = new Vuex.Store({
     },
     itemSet (context, payload) {
       context.commit('setItems', { items : payload.items })
+    },
+    addPlayer (context, payload) {
+      context.commit('playerAdd', { playerId : payload.player })
     }
   }
 })

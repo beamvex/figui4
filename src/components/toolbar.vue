@@ -14,6 +14,7 @@
       :loading="loading"
       :items="items"
       :search-input.sync="search"
+      @change="selectedPlayer"
       v-model="select"
       cache-items
       class="mx-3"
@@ -24,6 +25,24 @@
       solo-inverted
       prepend-inner-icon="search"
     >
+            <template
+                slot="selection"
+                slot-scope="data"
+              >
+                <template v-if="typeof data.item !== 'object'">
+                  <v-list-tile-content v-text="data.item"></v-list-tile-content>
+                </template>
+                <template v-else>
+                  <v-list-tile-avatar>
+                    <img :src="data.item.avatar">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+                    <v-list-tile-sub-title v-html="data.item.team"></v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </template>
+              </template>
+
             <template
                 slot="item"
                 slot-scope="data"
@@ -102,6 +121,9 @@
     
       clickDraw() {
         this.$store.dispatch('draw');
+      },
+      selectedPlayer(event) {
+        this.$store.dispatch('addPlayer', { player: event});
       }
     },
     }
