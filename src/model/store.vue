@@ -30,7 +30,15 @@ const store = new Vuex.Store({
           state.selectedPlayers.unshift(element);
         }
       });
+    },
+    playerDelete(state, payload) {
+      state.selectedPlayers.forEach(element => {
+        if (element.id === payload.playerId) {
+          state.selectedPlayers.shift(element);
+        }
+      });
     }
+
   },
   actions: {
     draw (context) {
@@ -44,6 +52,9 @@ const store = new Vuex.Store({
     },
     addPlayer (context, payload) {
       context.commit('playerAdd', { playerId : payload.player })
+    },
+    deletePlayer (context, payload) {
+      context.commit('playerDelete', { playerId : payload.player })
     }
   }
 })

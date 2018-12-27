@@ -41,14 +41,16 @@
               :key="i"
               @click=""
             >
-              <v-list-tile-action v-if="child.icon">
+              <v-list-tile-avatar>
+                    <img :src="child.avatar">
+                  </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="child.name"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="child.team"></v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action v-if="child.icon" @click="deletePlayer(child.value)">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-tile-action>
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ child.text }}
-                </v-list-tile-title>
-              </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
           <v-list-tile v-else :key="item.text" @click="">
@@ -86,7 +88,7 @@
                                 text: 'Recent Players',
                                 model: true,
                                 children: this.$store.state.selectedPlayers.map(item => {
-                                    return { icon: 'delete', text: item.name }
+                                    return { icon: 'delete', text: item['name'] + ' ' + item['team'], name: item['name'], team: item['team'], value: item['id'], avatar: 'https://img.footballindex.co.uk/' + item['attributes']['optimized_image']};
                                 })
                                 },
                                 ];
@@ -96,6 +98,11 @@
                     },
                 }
             
+          },
+          methods : {
+              deletePlayer(playerId) {
+                  this.$store.dispatch('deletePlayer', { player: playerId});
+              }
           }
       
   }
