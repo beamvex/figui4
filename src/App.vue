@@ -33,7 +33,7 @@ export default {
       source: String
     },
     mounted() {
-      playersService.getPlayers();
+      playersService.getPlayers(this.$store);
     },
     
   }

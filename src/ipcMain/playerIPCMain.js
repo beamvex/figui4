@@ -2,13 +2,20 @@ import { ipcMain } from 'electron';
 import nodeFetch from 'node-fetch'
 import fetchCached from 'fetch-cached'
 import fs from 'fs';
-import base62 from 'base62';
+import md5 from 'md5';
 
 const fetch = new fetchCached({
   fetch: nodeFetch,
   cache: {
-    get: (k) => Promise.resolve(null),
-    set: (k, v) => fs.writeFileSync(base62.encode(k), v),
+    get: (k) => {
+        var filename = md5(k) + '.dat';
+        if (fs.existsSync(filename)) {
+            return Promise.resolve(fs.readFileSync());
+        } else {
+            return Promise.resolve(null);
+        }
+    },
+    set: (k, v) => fs.writeFileSync(md5(k) + '.dat', v),
   }
 });
 

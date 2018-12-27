@@ -8,6 +8,7 @@ const store = new Vuex.Store({
   state: {
     count: 0,
     drawer: false,
+    items: [],
   },
   mutations: {
     increment (state) {
@@ -18,6 +19,9 @@ const store = new Vuex.Store({
     },
     setDraw (state, payload) {
       state.drawer = payload.newValue;
+    },
+    setItems(state, payload) {
+      state.items = payload.items;
     }
   },
   actions: {
@@ -26,6 +30,9 @@ const store = new Vuex.Store({
     },
     drawSet (context, payload) {
       context.commit('setDraw', { newValue : payload.newValue })
+    },
+    itemSet (context, payload) {
+      context.commit('setItems', { items : payload.items })
     }
   }
 })
