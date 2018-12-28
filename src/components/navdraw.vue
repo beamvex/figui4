@@ -39,16 +39,16 @@
             <v-list-tile
               v-for="(child, i) in item.children"
               :key="i"
-              @click=""
+              @click="selectPlayer(child.value)"
             >
-              <v-list-tile-avatar>
+              <v-list-tile-avatar> 
                     <img :src="child.avatar">
                   </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-html="child.name"></v-list-tile-title>
                 <v-list-tile-sub-title v-html="child.team"></v-list-tile-sub-title>
               </v-list-tile-content>
-              <v-list-tile-action v-if="child.icon" @click="deletePlayer(child.value)">
+              <v-list-tile-action v-if="child.icon" @click.stop="deletePlayer(child.value)">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-tile-action>
             </v-list-tile>
@@ -102,6 +102,9 @@
           methods : {
               deletePlayer(playerId) {
                   this.$store.dispatch('deletePlayer', { player: playerId});
+              },
+              selectPlayer(playerId) {
+                  this.$store.dispatch('selectPlayer', { player: playerId});
               }
           }
       

@@ -10,7 +10,7 @@
         <v-toolbar-side-icon @click.stop="clickDraw"></v-toolbar-side-icon>
         <span class="hidden-sm-and-down">Football Index Chart Tool</span>
       </v-toolbar-title>
-      <v-autocomplete
+      <v-autocomplete @click="clearSelection"
       :loading="loading"
       :items="items"
       :search-input.sync="search"
@@ -33,10 +33,10 @@
                   <v-list-tile-content v-text="data.item"></v-list-tile-content>
                 </template>
                 <template v-else>
-                  <v-list-tile-avatar>
+                  <v-list-tile-avatar @click="clearSelection">
                     <img :src="data.item.avatar">
                   </v-list-tile-avatar>
-                  <v-list-tile-content>
+                  <v-list-tile-content @click="clearSelection">
                     <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
                     <v-list-tile-sub-title v-html="data.item.team"></v-list-tile-sub-title>
                   </v-list-tile-content>
@@ -63,18 +63,7 @@
     </v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn icon>
-        <v-icon>apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>notifications</v-icon>
-      </v-btn>
-      <v-btn icon large>
-        <v-avatar size="32px" tile>
-          <img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
-          >
-        </v-avatar>
+        <v-icon>help</v-icon>
       </v-btn>
     </v-toolbar>
 </template>
@@ -91,7 +80,12 @@
     },
     watch: {
       search (val) {
-        val && val !== this.select && this.querySelections(val)
+          console.log(val, this.select);
+
+          //if (val !== null) {
+              this.clearSelection(null);
+          //}
+         return val && val !== this.select && this.querySelections(val)
       }
     },
     computed : {
@@ -124,6 +118,10 @@
       },
       selectedPlayer(event) {
         this.$store.dispatch('addPlayer', { player: event});
+        this.$store.dispatch('drawSet', { newValue : true });
+      },
+      clearSelection(event) {
+        this.select = null;
       }
     },
     }

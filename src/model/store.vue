@@ -25,6 +25,13 @@ const store = new Vuex.Store({
       state.items = payload.items;
     },
     playerAdd(state, payload) {
+      var found = []; 
+      state.selectedPlayers.forEach(element => {
+        if (element.id !== payload.playerId) {
+          found.push(element);
+        }
+      });
+      state.selectedPlayers = found;
       state.items.forEach(element => {
         if (element.id === payload.playerId) {
           state.selectedPlayers.unshift(element);
@@ -32,9 +39,26 @@ const store = new Vuex.Store({
       });
     },
     playerDelete(state, payload) {
+      var found = []; 
       state.selectedPlayers.forEach(element => {
+        if (element.id !== payload.playerId) {
+          found.push(element);
+        }
+      });
+      state.selectedPlayers = found;
+    },
+    playerSelect(state, payload) {
+      var found = []; 
+      state.selectedPlayers.forEach(element => {
+        if (element.id !== payload.playerId) {
+          found.push(element);
+        }
+      });
+      state.selectedPlayers = found;
+      
+      state.items.forEach(element => {
         if (element.id === payload.playerId) {
-          state.selectedPlayers.shift(element);
+          state.selectedPlayers.unshift(element);
         }
       });
     }
@@ -55,6 +79,9 @@ const store = new Vuex.Store({
     },
     deletePlayer (context, payload) {
       context.commit('playerDelete', { playerId : payload.player })
+    },
+    selectPlayer (context, payload) {
+      context.commit('playerSelect', { playerId : payload.player })
     }
   }
 })
