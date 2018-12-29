@@ -20,12 +20,18 @@ const fetch = new fetchCached({
 });
 
 ipcMain.on('getPlayers', (event, data) => {
-
-    fetch('https://api-prod.footballindex.co.uk/football.allTradable?page=1&per_page=20000&sort=asc').then(res => {
+    
+    fetch('https://api-prod.footballindex.co.uk/football.all24hrchanges?page=1&per_page=200&sort=asc').then(res => {
+        return res.json();
+    }).then(fst => {
+        fetch('https://api-prod.footballindex.co.uk/football.allTradable?page=1&per_page=20000&sort=asc').then(res => {
             return res.json();
         }).then(body => {
-            event.sender.send('resultGP', body);
+            var items = [];
+            
+            items = items.concat(fst.items);
+            items = items.concat(body.items)
+            event.sender.send('resultGP', {items});
         });
-
-    console.log('got it');
+    });
 });
