@@ -62,14 +62,20 @@
               </template>
     </v-autocomplete>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon @click="clickDialog">
         <v-icon>help</v-icon>
       </v-btn>
+      <about />
     </v-toolbar>
+    
 </template>
 
 <script>
+    import about from './about.vue'
   export default {
+      components: {
+          about,
+      },
       data () {
       return {
         loading: false,
@@ -115,6 +121,9 @@
     
       clickDraw() {
         this.$store.dispatch('draw');
+      },
+      clickDialog() {
+        this.$store.dispatch('dialogSet', {newValue: true});
       },
       selectedPlayer(event) {
         this.$store.dispatch('addPlayer', { player: event});

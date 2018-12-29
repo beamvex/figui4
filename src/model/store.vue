@@ -8,6 +8,7 @@ const store = new Vuex.Store({
   state: {
     count: 0,
     drawer: false,
+    dialog: false,
     items: [],
     selectedPlayers: [],
   },
@@ -20,6 +21,9 @@ const store = new Vuex.Store({
     },
     setDraw (state, payload) {
       state.drawer = payload.newValue;
+    },
+    setDialog (state, payload) {
+      state.dialog = payload.newValue;
     },
     setItems(state, payload) {
       state.items = payload.items;
@@ -70,6 +74,9 @@ const store = new Vuex.Store({
     },
     drawSet (context, payload) {
       context.commit('setDraw', { newValue : payload.newValue })
+    },
+    dialogSet (context, payload) {
+      context.commit('setDialog', { newValue : payload.newValue })
     },
     itemSet (context, payload) {
       context.commit('setItems', { items : payload.items })
