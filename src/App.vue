@@ -2,15 +2,8 @@
   <v-app id="inspire">
     <navdraw/>
     <toolbar/>
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          
-        </v-layout>
-      </v-container>
-    </v-content>
-    
-</v-app>
+    <appspace/>
+  </v-app>
 </template>
 
 <script>
@@ -18,11 +11,13 @@
 import playersService from './playersService'
 import navdraw from './components/navdraw.vue'
 import toolbar from './components/toolbar.vue'
+import appspace from './components/appspace.vue'
 
 export default {
     components: {
       navdraw,
-      toolbar
+      toolbar,
+      appspace
     },
     data: () => ({
       dialog: false,
