@@ -33,7 +33,7 @@
                 player: {
                     get() {  
                         if (this.$store.state.selectedPlayers.length > 0) {
-                            console.log('eh');
+                            
                             var item = this.$store.state.selectedPlayers[0];
                             return { 
                                     text: item['name'] + ' ' + item['team'], 
