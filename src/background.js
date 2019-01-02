@@ -6,6 +6,7 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 import './ipcMain/playerIPCMain'
+import winholder from './ipcMain/exportIPCMain'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -18,6 +19,8 @@ protocol.registerStandardSchemes(['app'], { secure: true })
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({ width: 1800, height: 1600 })
+
+  winholder.setWin(win);
 
   if (isDevelopment || process.env.IS_TEST) {
     // Load the url of the dev server if in development mode

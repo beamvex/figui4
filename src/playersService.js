@@ -9,10 +9,9 @@ export default {
             store.dispatch('itemSet', {items: data.items});
             console.log(data);
         });
-        /*
-    return new Promise(resolve => {
-        
-        
-    });*/
+    },
+
+    exportXL () {
+        ipcRenderer.send('exportXL');
     }
 }
